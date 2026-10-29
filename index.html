@@ -5,385 +5,367 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#101c25">
 <title>TSNU · Recogidas y destinos</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <style>
-/* Se mantiene tu diseño original exacto, eliminando solo las partes de tráfico */
-:root{color-scheme:dark;--bg:#0b151d;--panel:#101f29;--card:#182b37;--line:#2a414f;--text:#eef5f6;--muted:#9bb0bd;--accent:#63e3ba;--ink:#07261c;--blue:#79c9ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,sans-serif}body.light{color-scheme:light;--bg:#edf3f5;--panel:#fff;--card:#eef4f6;--line:#cad9df;--text:#142d3b;--muted:#4a6574;--accent:#007f60;--ink:#fff;--blue:#006ea5}button,input,select{font:inherit}button,a.btn{min-height:44px;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--card);color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}button:hover,a.btn:hover{border-color:var(--accent)}button:disabled{opacity:.4;cursor:default}button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px}.primary{background:var(--accent);color:var(--ink);border-color:var(--accent);font-weight:750}.small{font-size:12px;color:var(--muted)}header{height:78px;display:flex;justify-content:space-between;align-items:center;padding:12px 26px;border-bottom:1px solid var(--line);gap:12px}header .brand{display:flex;align-items:center;gap:12px}.logo{border-radius:12px;background:var(--accent);color:var(--ink);font-size:25px;width:44px;height:44px;display:grid;place-items:center}h1{font-size:19px;line-height:1.2;margin:0;letter-spacing:-.5px}.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:10px;font-weight:750;color:var(--muted)}.tools{display:flex;gap:8px;align-items:center}.badge{border:1px solid var(--line);padding:5px 10px;border-radius:30px;color:var(--muted);font-size:12px}.badge.ok{color:var(--accent)}main{display:grid;grid-template-columns:380px 1fr;height:calc(100dvh - 78px)}aside{padding:24px;overflow:auto;background:var(--panel);border-right:1px solid var(--line)}h2{font-size:26px;letter-spacing:-1px;margin:4px 0 8px}h3{font-size:14px;margin:22px 0 10px}.intro{margin:0 0 20px;color:var(--muted);font-size:13px}.origin{border:1px solid var(--line);border-radius:14px;padding:14px}.origin strong{display:block;font-size:14px}.row{display:flex;align-items:center;gap:8px}.row>*{min-width:0}.grow{flex:1}.origin .row{margin-top:12px}.origin button{flex:1;font-size:12px;padding:8px}input{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:12px;padding:12px;min-height:46px}.hospital-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.hospital{justify-content:flex-start;text-align:left;font-size:12px;min-height:55px;padding:9px}.hospital span{color:var(--accent);font-size:18px}.hospital-list .small{grid-column:1/-1}.stop{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}.number{background:var(--accent);color:var(--ink);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;flex-shrink:0}.stop strong{font-size:13px;display:block}.stop .actions{display:flex;gap:3px}.stop button{padding:0;width:34px;min-height:44px;border:0;background:transparent}.empty{border:1px dashed var(--line);padding:20px 12px;border-radius:12px;color:var(--muted);font-size:13px;text-align:center}.wide{width:100%}.route-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.route-actions .primary{grid-column:1/-1}details{border-top:1px solid var(--line);padding-top:14px;margin-top:20px;font-size:12px;color:var(--muted)}summary{cursor:pointer;color:var(--text);min-height:36px}.map-area{position:relative;min-width:0;display:flex;flex-direction:column}#map{flex:1;min-height:240px;background:#263c49;z-index:1}body:not(.light) .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.78) saturate(.6)}.map-tools{position:absolute;top:20px;left:20px;right:20px;z-index:450;display:flex;justify-content:space-between;pointer-events:none;gap:8px}.map-tools>*{pointer-events:auto}.map-tools button{background:var(--panel);box-shadow:0 4px 18px #0003}.map-caption{position:absolute;top:82px;left:20px;z-index:450;background:var(--panel);padding:7px 12px;border-radius:8px;font-size:12px;max-width:calc(100% - 40px);pointer-events:none}.dashboard{background:var(--panel);border-top:1px solid var(--line);padding:18px 24px;z-index:2}.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.stat b{display:block;font-size:30px;letter-spacing:-1px;line-height:1.3;color:var(--accent)}.stat:nth-child(2) b{color:var(--blue)}.stat label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1.6px;color:var(--muted)}#routeStatus{margin:10px 0 0;font-size:12px;color:var(--muted)}.pin{background:var(--accent);color:var(--ink);border:3px solid #fff;border-radius:50%;text-align:center;font:bold 14px/28px system-ui;box-shadow:0 3px 15px #0006}.ambulance{font-size:29px;line-height:40px;background:#fff;border-radius:50%;text-align:center;box-shadow:0 0 0 6px #63e3ba55}.leaflet-control-attribution{font-size:10px}.leaflet-popup-content{color:#163444}#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:2000;background:var(--text);color:var(--bg);padding:12px 20px;border-radius:12px;box-shadow:0 4px 30px #0005;max-width:90vw;font-size:13px}#toast:empty{display:none}.leg{padding:10px 0;border-bottom:1px solid var(--line)}.leg strong{display:block;color:var(--text)}dialog{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:20px;padding:24px;max-width:430px;width:calc(100% - 32px)}dialog::backdrop{background:#0009}dialog label{display:block;margin:12px 0 5px;font-size:13px}dialog .row{margin-top:18px}.footer-note{font-size:11px;color:var(--muted);margin-top:16px}#mobileToggle{display:none}@media(min-width:1500px){main{grid-template-columns:420px 1fr}aside{padding:30px}}@media(max-width:760px){header{height:68px;padding:10px 14px}header .small{display:none}h1{font-size:16px}.logo{width:38px;height:38px}.badge{max-width:145px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}main{height:auto;display:flex;flex-direction:column}.map-area{order:0;height:55dvh;min-height:360px}aside{order:1;border:0;padding:20px 16px;overflow:visible}.dashboard{padding:12px 16px}.stat b{font-size:25px}.map-tools{top:12px;left:12px;right:12px}.map-tools button{font-size:12px;padding:8px 10px}.map-caption{top:68px;left:12px}.hospital-list{grid-template-columns:1fr 1fr}.route-actions{position:sticky;bottom:0;padding:10px 0;background:var(--panel);z-index:500;padding-bottom:max(10px,env(safe-area-inset-bottom))}#mobileToggle{display:inline-flex}.mobile-map aside{display:none}.mobile-map .map-area{height:calc(100dvh - 68px)}.tools{gap:5px}#theme{padding:8px 11px}}
-main{grid-template-columns:410px 1fr}select{color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;min-height:44px;width:100%}label.field{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px}.section-title{display:flex;align-items:center;justify-content:space-between;margin-top:22px}.section-title h3{margin:0}.section-title button{font-size:12px;padding:8px 10px}.service{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}.service .name{font-size:13px;font-weight:700}.service .path{margin:7px 0;font-size:12px;overflow-wrap:anywhere}.service .actions{display:flex;gap:6px}.service .actions button{font-size:12px;min-height:36px;padding:5px 10px}.type{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.6px;color:var(--accent)}.type.dropoff{color:var(--blue)}.type.finish{color:#edb76a}.number.dropoff{background:var(--blue);color:#142532}.number.finish{background:#edb76a;color:#142532}#editor{border:1px solid var(--accent);padding:14px;border-radius:14px;margin-top:12px;background:var(--card)}[hidden]{display:none!important}.pointButton{width:100%;justify-content:space-between;text-align:left;margin:6px 0;font-size:13px;overflow-wrap:anywhere}.pointButton span{max-width:85%}.route-actions{grid-template-columns:1fr 1fr}.route-actions .primary{grid-column:auto}.route-actions #organize{grid-column:1/-1}.route-actions button{font-size:12px;padding:10px}.tagline{font-size:11px;color:var(--muted);margin-top:8px}.stats{grid-template-columns:1fr 1fr 1fr}.dashboard .delay{color:#f0bd76;font-size:12px;margin:4px 0 0}#placeDialog{max-height:90dvh;overflow:auto}#placeResults{margin-top:8px}#placeResults button{width:100%;text-align:left;justify-content:flex-start;margin-bottom:5px;font-size:12px}.coord-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.pin.pickup{background:#63e3ba;color:#07261c}.pin.dropoff{background:#79c9ff;color:#142532}.pin.finish{background:#edb76a;color:#142532}.leaflet-control-attribution{max-width:100%}
+:root{color-scheme:dark;--bg:#0b151d;--panel:#101f29;--card:#182b37;--line:#2a414f;--text:#eef5f6;--muted:#9bb0bd;--accent:#63e3ba;--ink:#07261c;--blue:#79c9ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,sans-serif}
+body.light{color-scheme:light;--bg:#edf3f5;--panel:#fff;--card:#eef4f6;--line:#cad9df;--text:#142d3b;--muted:#4a6574;--accent:#007f60;--ink:#fff;--blue:#006ea5}
+button,input,select{font:inherit}
+button,a.btn{min-height:44px;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--card);color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+button:hover,a.btn:hover{border-color:var(--accent)}button:disabled{opacity:.4;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.primary{background:var(--accent);color:var(--ink);border-color:var(--accent);font-weight:750}
+.small{font-size:12px;color:var(--muted)}
+header{height:78px;display:flex;justify-content:space-between;align-items:center;padding:12px 26px;border-bottom:1px solid var(--line);gap:12px}
+header .brand{display:flex;align-items:center;gap:12px}
+.logo{border-radius:12px;background:var(--accent);color:var(--ink);font-size:25px;width:44px;height:44px;display:grid;place-items:center}
+h1{font-size:19px;line-height:1.2;margin:0;letter-spacing:-.5px}
+.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:10px;font-weight:750;color:var(--muted)}
+.tools{display:flex;gap:8px;align-items:center}
+.badge{border:1px solid var(--line);padding:5px 10px;border-radius:30px;color:var(--muted);font-size:12px}
+.badge.ok{color:var(--accent)}
+main{display:grid;grid-template-columns:380px 1fr;height:calc(100dvh - 78px)}
+aside{padding:24px;overflow:auto;background:var(--panel);border-right:1px solid var(--line)}
+h2{font-size:26px;letter-spacing:-1px;margin:4px 0 8px}h3{font-size:14px;margin:22px 0 10px}
+.origin{border:1px solid var(--line);border-radius:14px;padding:14px}
+.origin strong{display:block;font-size:14px}
+.row{display:flex;align-items:center;gap:8px}.grow{flex:1}
+input{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:12px;padding:12px;min-height:46px}
+.stop{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+.number{background:var(--accent);color:var(--ink);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;flex-shrink:0}
+.stop strong{font-size:13px;display:block}
+.stop button{padding:0;width:34px;min-height:44px;border:0;background:transparent}
+.empty{border:1px dashed var(--line);padding:20px 12px;border-radius:12px;color:var(--muted);font-size:13px;text-align:center}
+.wide{width:100%}
+.route-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.route-actions .primary{grid-column:1/-1}
+.map-area{position:relative;min-width:0;display:flex;flex-direction:column}
+#map{flex:1;min-height:240px;background:#263c49;z-index:1}
+body:not(.light) .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.78) saturate(.6)}
+.map-tools{position:absolute;top:20px;left:20px;right:20px;z-index:450;display:flex;justify-content:space-between;pointer-events:none;gap:8px}
+.map-tools>*{pointer-events:auto}
+.map-tools button{background:var(--panel);box-shadow:0 4px 18px #0003}
+.map-caption{position:absolute;top:82px;left:20px;z-index:450;background:var(--accent);color:var(--ink);padding:7px 12px;border-radius:8px;font-size:13px;font-weight:bold;pointer-events:none;display:none;}
+.dashboard{background:var(--panel);border-top:1px solid var(--line);padding:18px 24px;z-index:2}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.stat b{display:block;font-size:30px;letter-spacing:-1px;line-height:1.3;color:var(--accent)}
+.stat label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1.6px;color:var(--muted)}
+.pin{background:var(--accent);color:var(--ink);border:3px solid #fff;border-radius:50%;text-align:center;font:bold 14px/28px system-ui;box-shadow:0 3px 15px #0006}
+.ambulance{font-size:29px;line-height:40px;background:#fff;border-radius:50%;text-align:center;box-shadow:0 0 0 6px #63e3ba55}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:2000;background:var(--text);color:var(--bg);padding:12px 20px;border-radius:12px;box-shadow:0 4px 30px #0005;font-size:13px}
+#toast:empty{display:none}
+
+/* Modificaciones para buscador integrado */
+.search-row { display: flex; gap: 6px; margin-top: 5px; }
+.search-row input { flex: 1; min-height: 40px; font-size: 13px; }
+.search-row button { min-width: 44px; padding: 0; font-size: 16px; }
+.results-list { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+.results-list button { text-align: left; justify-content: flex-start; font-size: 12px; padding: 8px; border-color: var(--line); }
+.selected-point { background: var(--accent); color: var(--ink); padding: 10px 14px; border-radius: 8px; font-size: 13px; font-weight: bold; margin-top: 5px; display: flex; justify-content: space-between; align-items: center;}
+label.field{display:block;font-size:12px;color:var(--muted);margin:14px 0 4px}
+.service{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+.service .name{font-size:13px;font-weight:700}
+.service .path{margin:7px 0;font-size:12px;overflow-wrap:anywhere}
+.service .actions{display:flex;gap:6px}
+.service .actions button{font-size:12px;min-height:36px;padding:5px 10px}
+#editor{border:1px solid var(--accent);padding:16px;border-radius:14px;margin-top:12px;background:var(--card)}
+.type{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.6px;color:var(--accent)}
+.pin.pickup, .type.pickup{color:var(--ink);background:var(--accent)}
+.pin.dropoff, .type.dropoff{color:#142532;background:#79c9ff}
+.pin.finish, .type.finish{color:#142532;background:#edb76a}
+.number.dropoff{background:#79c9ff;color:#142532}
+.number.finish{background:#edb76a;color:#142532}
+
+@media(max-width:760px){
+    main{display:flex;flex-direction:column;height:auto}
+    .map-area{order:0;height:45dvh;min-height:300px}
+    aside{order:1;border:0;padding:20px 16px;overflow:visible}
+    .route-actions{position:sticky;bottom:0;padding:10px 0;background:var(--panel);z-index:500;}
+    header h1{font-size:16px} header .small{display:none}
+}
+@media(min-width:1500px){main{grid-template-columns:420px 1fr}}
 </style>
 </head>
 <body>
 <header>
     <div class="brand">
-        <div class="logo" aria-hidden="true">✚</div>
-        <div>
-            <h1>TSNU <span style="color:var(--accent)">Rutas</span></h1>
-            <div class="small">Sin claves · Tráfico vía app externa</div>
-        </div>
+        <div class="logo">✚</div>
+        <div><h1>TSNU <span style="color:var(--accent)">Rutas</span></h1></div>
     </div>
-    <div class="tools">
-        <span class="badge" id="gpsStatus">GPS desactivado</span>
-        <button id="theme" aria-label="Cambiar tema">☀</button>
-    </div>
+    <div class="tools"><span class="badge" id="gpsStatus">GPS desactivado</span><button id="theme">☀</button></div>
 </header>
 <main>
 <aside id="planner">
-    <div class="eyebrow">Cada servicio, en su sitio</div>
-    <h2>Planifica la ruta.</h2>
-    <p class="intro">Sal de cualquier punto. Vincula cada recogida con su destino y calcula el orden óptimo.</p>
+    <h2>Organiza tu ruta.</h2>
     
     <section class="origin">
         <div class="eyebrow">01 · Punto de salida</div>
-        <strong id="originName">Elige desde dónde sales</strong>
-        <div class="small" id="accuracy">Tu ubicación, base u hospital.</div>
-        <div class="row">
-            <button id="gps" class="primary">◎ Activar GPS</button>
-            <button id="chooseOrigin">⌖ Elegir punto</button>
+        <strong id="originName">Ubicación de inicio</strong>
+        <div class="row" style="margin-top:10px">
+            <button id="gps" class="primary grow">◎ Usar GPS</button>
+            <button id="btnMapOrigin">⌖ Tocar en mapa</button>
         </div>
+        <div class="search-row">
+            <input id="originSearch" placeholder="O busca calle, número, pueblo...">
+            <button id="btnSearchOrigin">🔍</button>
+        </div>
+        <div id="originResults" class="results-list"></div>
     </section>
     
-    <div class="section-title">
-        <h3>02 · Recogidas y destinos</h3>
-        <button id="newService">＋ Servicio</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px;">
+        <h3>02 · Servicios</h3>
+        <button id="newService">＋ Añadir</button>
     </div>
-    <p class="small">Añade aquí las recogidas y sus respectivos destinos.</p>
     <div id="services"></div>
     
     <section id="editor" hidden>
         <div class="row">
             <strong id="editorTitle" class="grow">Nuevo servicio</strong>
-            <button id="cancelEditor" aria-label="Cerrar editor">×</button>
+            <button id="cancelEditor">×</button>
         </div>
-        <label class="field" for="serviceName">Referencia</label>
-        <input id="serviceName" maxlength="40" placeholder="Ej: Diálisis H. La Paz">
-        <label class="field">Recogida</label>
-        <button class="pointButton" id="choosePickup"><span id="pickupLabel">Elegir lugar de recogida</span>⌖</button>
-        <label class="field">Destino</label>
-        <button class="pointButton" id="chooseDropoff"><span id="dropoffLabel">Elegir lugar de destino</span>⌖</button>
-        <button class="primary wide" id="saveService" style="margin-top:12px">Guardar servicio</button>
+        
+        <label class="field">Referencia del servicio</label>
+        <input id="serviceName" placeholder="Ej: Alta H. La Paz">
+        
+        <label class="field">Lugar de Recogida</label>
+        <div id="pickupSelected" class="selected-point" hidden>
+            <span id="pickupText"></span>
+            <button id="clearPickup" style="min-height:24px;padding:2px 8px;border:0;background:transparent;color:inherit">✕</button>
+        </div>
+        <div id="pickupSearchBox">
+            <div class="search-row">
+                <input id="pickupSearch" placeholder="Ej: Calle Mayor 5, Alcalá...">
+                <button id="btnSearchPickup">🔍</button>
+                <button id="btnMapPickup">⌖</button>
+            </div>
+            <div id="pickupResults" class="results-list"></div>
+        </div>
+        
+        <label class="field">Lugar de Destino</label>
+        <div id="dropoffSelected" class="selected-point" hidden style="background:#79c9ff;">
+            <span id="dropoffText"></span>
+            <button id="clearDropoff" style="min-height:24px;padding:2px 8px;border:0;background:transparent;color:inherit">✕</button>
+        </div>
+        <div id="dropoffSearchBox">
+            <div class="search-row">
+                <input id="dropoffSearch" placeholder="Ej: Calle de la iglesia 13, Valdemanco">
+                <button id="btnSearchDropoff">🔍</button>
+                <button id="btnMapDropoff">⌖</button>
+            </div>
+            <div id="dropoffResults" class="results-list"></div>
+        </div>
+        
+        <button class="primary wide" id="saveService" style="margin-top:16px" disabled>Guardar servicio</button>
     </section>
     
-    <div class="section-title">
-        <h3>03 · Fin de ruta <span class="small">opcional</span></h3>
-        <button id="clearFinish" hidden aria-label="Quitar fin de ruta">×</button>
+    <h3 style="margin-top:24px">03 · Fin de ruta y Opciones</h3>
+    <div class="row">
+        <button id="finishLast" class="grow pointButton">Acabar en destino</button>
+        <button id="finishBase" class="grow pointButton">Volver a Base S. Fernando</button>
     </div>
-    <button class="pointButton" id="chooseFinish"><span id="finishLabel">Terminar en el último destino</span>⌖</button>
-    
-    <div class="row" style="margin-top:12px">
-        <div class="grow">
-            <label class="field" for="capacity">Servicios simultáneos a bordo</label>
-            <select id="capacity">
-                <option value="1">1 · Un paciente a la vez</option>
-                <option value="2">Hasta 2 servicios</option>
-                <option value="3">Hasta 3 servicios</option>
-                <option value="4">Hasta 4 servicios</option>
-                <option value="5">Hasta 5 servicios</option>
-                <option value="6" selected>Ilimitado</option>
-            </select>
-        </div>
+    <div style="margin-top:8px">
+        <select id="capacity">
+            <option value="1">1 paciente a la vez</option>
+            <option value="6" selected>Agrupación libre</option>
+        </select>
     </div>
     
-    <div class="section-title">
-        <h3>04 · Orden del recorrido</h3>
-        <button id="clear">Vaciar</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px;">
+        <h3>04 · Recorrido</h3>
+        <button id="clear">Vaciar Todo</button>
     </div>
-    <p id="orderInfo" class="small">La recogida siempre irá antes de su destino.</p>
     <div id="stops"></div>
     
     <div class="route-actions">
         <button id="organize" class="primary">✦ Optimizar Ruta</button>
-        <button id="calculate">Calcular sin optimizar</button>
-        <button id="complete">✓ Completar parada</button>
-        <button id="navigate">Abrir todo en Maps ↗</button>
+        <button id="navigate">Abrir Maps ↗</button>
     </div>
-    
-    <details id="legsPanel">
-        <summary>Desglose por paradas</summary>
-        <div id="legs">Calcula el recorrido para ver los tramos.</div>
-    </details>
-    
-    <div class="footer-note">TSNU Simple · v1.0<br>100% Libre. Sin claves de API.</div>
+    <div id="legs" class="small" style="margin-top:12px; color:var(--muted)"></div>
 </aside>
-<section class="map-area" aria-label="Mapa y resumen">
+<section class="map-area">
     <div id="map"></div>
     <div class="map-tools">
         <div class="row">
             <button id="center">◎ Centrar</button>
             <button id="fit">⛶ Ruta</button>
         </div>
-        <button id="mobileToggle">Solo mapa</button>
     </div>
-    <div class="map-caption">
-        <span id="mapHint">Elige tu punto de salida</span>
-        <button id="cancelPick" hidden>Cancelar</button>
-    </div>
+    <div class="map-caption" id="mapHint">Toca un punto en el mapa <button id="cancelPick" style="margin-left:10px;padding:4px 8px;min-height:0;color:black">Cancelar</button></div>
     <div class="dashboard">
         <div class="stats">
             <div class="stat"><label>Distancia</label><b id="distance">— km</b></div>
             <div class="stat"><label>Conducción</label><b id="duration">— min</b></div>
             <div class="stat"><label>Llegada</label><b id="arrival">—:—</b></div>
         </div>
-        <p id="routeStatus" role="status">Añade una salida y tus servicios.</p>
+        <p id="routeStatus" class="small" style="margin-top:10px">Esperando servicios...</p>
     </div>
 </section>
 </main>
+<div id="toast" role="status"></div>
 
-<!-- Diálogo unificado de búsqueda -->
-<dialog id="placeDialog">
-    <h2 id="placeTitle">Elegir punto</h2>
-    <button class="wide primary" id="placeMap" style="margin-bottom: 12px;">⌖ Tocar punto en el mapa</button>
-    
-    <details open>
-        <summary>Buscar dirección (Libre)</summary>
-        <form id="searchForm">
-            <div class="row">
-                <input id="addressSearch" type="search" placeholder="Calle, número y municipio..." aria-label="Dirección a buscar">
-                <button id="searchAddress">Buscar</button>
-            </div>
-        </form>
-        <p class="small" id="searchStatus">Buscador OpenStreetMap (Nominatim).</p>
-        <div id="placeResults"></div>
-    </details>
-    
-    <details>
-        <summary>Hospitales de acceso rápido</summary>
-        <div class="hospital-list" id="hospitals"></div>
-    </details>
-    <button id="closePlace" class="wide" style="margin-top:16px">Cerrar</button>
-</dialog>
-
-<div id="toast" role="status" aria-live="polite"></div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script>
 'use strict';
-
-// --- Lógica del TSP (Problema del Viajante) que ya tenías, funciona perfecto y sin claves ---
-function pendingNodes(services){return services.flatMap(s=>[...(s.status==='pending'?[{...s.pickup,id:s.id+':p',sid:s.id,type:'pickup',service:s.name}]:[]),{...s.dropoff,id:s.id+':d',sid:s.id,type:'dropoff',service:s.name}])}
-function validSequence(nodes,services,capacity){const onboard=new Set(services.filter(s=>s.status==='onboard').map(s=>s.id));if(onboard.size>capacity)return false;const expected=pendingNodes(services);if(nodes.length!==expected.length||new Set(nodes.map(n=>n.id)).size!==nodes.length||nodes.some(n=>!expected.some(e=>e.id===n.id)))return false;for(const n of nodes){if(n.type==='pickup'){if(onboard.has(n.sid)||onboard.size>=capacity)return false;onboard.add(n.sid)}else{if(!onboard.has(n.sid))return false;onboard.delete(n.sid)}}return onboard.size===0}
-function defaultSequence(services){return [...services.filter(s=>s.status==='onboard').map(s=>s.id+':d'),...services.filter(s=>s.status==='pending').flatMap(s=>[s.id+':p',s.id+':d'])]}
-
-function optimizeSequence(nodes,services,capacity,matrix,hasFinish){
-    const n=nodes.length,total=1<<n,initial=services.filter(s=>s.status==='onboard').map(s=>s.id);
-    if(initial.length>capacity)throw Error('Límite inferior a los servicios a bordo.');
-    const edge=(a,b)=>Number.isFinite(matrix[a]?.[b])?matrix[a][b]:Infinity;
-    if(!n){if(hasFinish&&!Number.isFinite(edge(0,1)))throw Error('Sin ruta al final.');return []}
-    const memo=new Map(),choice=new Map();
-    function solve(mask,last){const key=mask*(n+1)+last;if(memo.has(key))return memo.get(key);if(mask===total-1)return hasFinish?edge(last,n+1):0;const aboard=new Set(initial);for(let i=0;i<n;i++)if(mask&(1<<i)){if(nodes[i].type==='pickup')aboard.add(nodes[i].sid)}for(let i=0;i<n;i++)if(mask&(1<<i)&&nodes[i].type==='dropoff')aboard.delete(nodes[i].sid);
-    let best=Infinity,next=-1;for(let i=0;i<n;i++){if(mask&(1<<i))continue;const p=nodes[i];if(p.type==='dropoff'&&!aboard.has(p.sid)||p.type==='pickup'&&(aboard.has(p.sid)||aboard.size>=capacity))continue;const d=edge(last,i+1);if(!Number.isFinite(d))continue;const cost=d+solve(mask|(1<<i),i+1);if(cost<best){best=cost;next=i}}
-    memo.set(key,best);choice.set(key,next);return best}
-    if(!Number.isFinite(solve(0,0)))throw Error('No hay recorrido viable.');const result=[];let mask=0,last=0;while(mask!==total-1){const i=choice.get(mask*(n+1)+last);result.push(nodes[i].id);mask|=1<<i;last=i+1}return result;
-}
-
 const $=id=>document.getElementById(id);
-function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
-function button(text,label,fn){const b=element('button','',text);if(label)b.setAttribute('aria-label',label);b.onclick=fn;return b}
-
-let toastTimer;function toast(text){$('toast').textContent=text;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').textContent='',5000)}
+function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
+function button(text,label,fn){const b=element('button','',text);if(label)b.setAttribute('aria-label',label);b.onclick=fn;return b;}
+let toastTimer; function toast(text){$('toast').textContent=text; $('toast').style.display='block'; clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('toast').style.display='none',4000);}
 
 try{document.body.classList.toggle('light',localStorage.getItem('tsnu-theme')==='light')}catch{}$('theme').onclick=()=>{document.body.classList.toggle('light');try{localStorage.setItem('tsnu-theme',document.body.classList.contains('light')?'light':'dark')}catch{}};
 
-const bounds=L.latLngBounds([[39.8,-4.65],[41.2,-3.05]]);
-const map=L.map('map',{center:[40.44,-3.70],zoom:11,minZoom:8,zoomControl:false});
+const map=L.map('map',{center:[40.44,-3.70],zoom:10,zoomControl:false});
 L.control.zoom({position:'bottomright'}).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
-
-const S={origin:null,finish:null,services:[],order:[],capacity:6,nextId:1,rev:0,busy:false,watch:null,follow:false,lastFix:0,routeOrigin:null,routeTime:0};
-let draft=null,placeTarget=null,picking=null,routeLine=null,originMarker=null,accuracyCircle=null;
+const S={origin:null,finish:null,services:[],order:[],capacity:6,nextId:1,watch:null,busy:false};
+let draft=null, picking=null, routeLine=null, originMarker=null, accuracyCircle=null;
 const markers=L.layerGroup().addTo(map);
 
-const hospitals=[['La Paz',40.4807,-3.6875],['Gregorio Marañón',40.4190,-3.6706],['12 de Octubre',40.3768,-3.6961],['Clínico San Carlos',40.4406,-3.7203],['Ramón y Cajal',40.4868,-3.6908],['F. Jiménez Díaz',40.4398,-3.7176],['La Princesa',40.4339,-3.6766]];
-
-const km=n=>(n/1000).toLocaleString('es-ES',{maximumFractionDigits:1})+' km',mins=n=>Math.max(0,Math.round(n/60))+' min',clock=t=>new Date(t).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
-
-function ordered(){const ns=pendingNodes(S.services);return S.order.map(id=>ns.find(n=>n.id===id)).filter(Boolean)}
-function routeNodes(){return [...ordered(),...(S.finish?[{...S.finish,id:'finish',type:'finish',service:'Fin de ruta'}]:[])]}
-
-async function requestJSON(url){
-    const r=await fetch(url);
-    if(!r.ok) throw Error('Error al conectar con el servidor libre ('+r.status+').');
-    return await r.json();
-}
-
-function invalidate(message='Recorrido modificado · Vuelve a calcular.'){
-    S.rev++; S.busy=false; S.routeOrigin=null; S.routeTime=0;
-    if(routeLine){map.removeLayer(routeLine);routeLine=null}
-    $('distance').textContent='— km';$('duration').textContent='— min';$('arrival').textContent='—:—';
-    $('routeStatus').textContent=message;
-    $('legs').textContent='Calcula el recorrido para ver cada tramo.';
-    sync();
-}
-
-function sync(){
-    const ready=!!S.origin&&routeNodes().length>0&&validSequence(ordered(),S.services,S.capacity);
-    $('organize').disabled=!S.origin||!routeNodes().length||S.busy;
-    $('calculate').disabled=!ready||S.busy;
-    $('organize').textContent=S.busy?'Procesando...':'✦ Optimizar Ruta';
-    $('complete').disabled=!routeNodes().length||S.busy;
-    $('navigate').disabled=!ready;
-    $('clear').disabled=!S.services.length&&!S.finish;
-    $('newService').disabled=S.services.length>=6;
-    $('gps').textContent=S.watch!==null?'■ Detener GPS':'◎ Activar GPS';
-    $('clearFinish').hidden=!S.finish;
-    $('finishLabel').textContent=S.finish?S.finish.name:'Terminar en el último destino';
-}
-
-function render(){
-    markers.clearLayers();$('services').replaceChildren();
-    if(!S.services.length)$('services').append(element('div','empty','Añade un servicio.'));
-    
-    for(const s of S.services){
-        const box=element('div','service');
-        box.append(element('div','name',s.name+(s.status==='onboard'?' · A BORDO':'')),element('div','path','Recogida: '+s.pickup.name),element('div','path','Destino: '+s.dropoff.name));
-        const actions=element('div','actions');
-        actions.append(button('Editar','',()=>edit(s.id)),button('Eliminar','',()=>{
-            if(s.status==='onboard'&&!confirm('¿Eliminar servicio a bordo?'))return;
-            S.services=S.services.filter(x=>x.id!==s.id);
-            S.order=S.order.filter(id=>!id.startsWith(s.id+':'));
-            invalidate();render();
-        }));
-        box.append(actions);$('services').append(box);
-    }
-    
-    $('stops').replaceChildren();const ns=routeNodes();
-    if(!ns.length)$('stops').append(element('div','empty','Secuencia pendiente.'));
-    
-    ns.forEach((p,i)=>{
-        const label=p.type==='pickup'?'RECOGIDA':p.type==='dropoff'?'DESTINO':'FIN';
-        const row=element('div','stop'),number=element('span','number '+p.type,i+1),info=element('div','grow');
-        info.append(element('span','type '+p.type,label+' · '+p.service),element('strong','',p.name));
-        row.append(number,info);
-        
-        if(p.type!=='finish'){
-            const actions=element('div','actions');
-            for(const d of [-1,1]){
-                const b=button(d===-1?'↑':'↓','',()=>{
-                    const next=[...S.order];[next[i],next[i+d]]=[next[i+d],next[i]];
-                    const pNodes=pendingNodes(S.services);
-                    if(!validSequence(next.map(id=>pNodes.find(n=>n.id===id)),S.services,S.capacity))
-                        return toast('Ese orden incumple lógica (recogida previa) o capacidad.');
-                    S.order=next;invalidate();$('orderInfo').textContent='Orden manual.';render();
-                });
-                b.disabled=i+d<0||i+d>=S.order.length;
-                actions.append(b);
-            }
-            row.append(actions);
+// Buscador ArcGIS (Gratis, sin API Key, excelente para calles y pueblos en España)
+async function searchAddress(query, resultsDiv, target) {
+    if(query.length < 3) return;
+    resultsDiv.innerHTML = '<span class="small">Buscando...</span>';
+    try {
+        const url = `https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&singleLine=${encodeURIComponent(query + ', Madrid, España')}&maxLocations=5`;
+        const res = await fetch(url);
+        const data = await res.json();
+        resultsDiv.innerHTML = '';
+        if(!data.candidates || data.candidates.length === 0) {
+            resultsDiv.innerHTML = '<span class="small" style="color:var(--accent)">No encontrado. Usa "Tocar en mapa".</span>';
+            return;
         }
-        $('stops').append(row);
-        L.marker([p.lat,p.lng],{icon:L.divIcon({className:'pin '+p.type,html:String(i+1),iconSize:[34,34],iconAnchor:[17,17]})}).addTo(markers).bindPopup(label+' · '+p.name);
-    });
-    sync();
+        data.candidates.forEach(c => {
+            const btn = button(c.address, null, () => selectPoint(target, {name: c.address, lat: c.location.y, lng: c.location.x}));
+            resultsDiv.append(btn);
+        });
+    } catch(e) {
+        resultsDiv.innerHTML = '<span class="small">Error al buscar.</span>';
+    }
 }
+
+function selectPoint(target, p) {
+    if(target === 'origin') {
+        stopGPS(); S.origin = {...p, type: 'manual'}; paintOrigin();
+        $('originSearch').value = ''; $('originResults').innerHTML = '';
+    } else if(target === 'pickup') {
+        draft.pickup = {...p}; 
+        $('pickupText').textContent = p.name;
+        $('pickupSelected').hidden = false; $('pickupSearchBox').hidden = true;
+    } else if(target === 'dropoff') {
+        draft.dropoff = {...p};
+        $('dropoffText').textContent = p.name;
+        $('dropoffSelected').hidden = false; $('dropoffSearchBox').hidden = true;
+    }
+    cancelPick(); map.setView([p.lat, p.lng], 15); checkDraft(); render();
+}
+
+$('btnSearchOrigin').onclick=()=> searchAddress($('originSearch').value, $('originResults'), 'origin');
+$('btnSearchPickup').onclick=()=> searchAddress($('pickupSearch').value, $('pickupResults'), 'pickup');
+$('btnSearchDropoff').onclick=()=> searchAddress($('dropoffSearch').value, $('dropoffResults'), 'dropoff');
+
+// Busqueda al pulsar Enter
+['originSearch','pickupSearch','dropoffSearch'].forEach(id => {
+    $(id).addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') $(id.replace('Search', 'btnSearch')).click();
+    });
+});
+
+$('clearPickup').onclick=()=>{draft.pickup=null; $('pickupSelected').hidden=true; $('pickupSearchBox').hidden=false; $('pickupSearch').value=''; checkDraft();};
+$('clearDropoff').onclick=()=>{draft.dropoff=null; $('dropoffSelected').hidden=true; $('dropoffSearchBox').hidden=false; $('dropoffSearch').value=''; checkDraft();};
+
+function checkDraft(){ $('saveService').disabled = !(draft?.pickup && draft?.dropoff); }
 
 function edit(id=null){
-    const s=S.services.find(s=>s.id===id);
-    draft=s?{...s,pickup:{...s.pickup},dropoff:{...s.dropoff}}:{id:null,name:'Servicio '+S.nextId,pickup:null,dropoff:null,status:'pending'};
-    $('editor').hidden=false;$('editorTitle').textContent=s?'Editar':'Nuevo';
-    $('serviceName').value=draft.name;renderDraft();
+    const s = S.services.find(s=>s.id===id);
+    draft = s ? {id: s.id, name: s.name, pickup: {...s.pickup}, dropoff: {...s.dropoff}, status: s.status} : {id:null, name:'Servicio '+S.nextId, pickup:null, dropoff:null, status:'pending'};
+    $('editorTitle').textContent = s ? 'Editar' : 'Nuevo Servicio';
+    $('serviceName').value = draft.name;
+    
+    if(draft.pickup) { $('pickupText').textContent = draft.pickup.name; $('pickupSelected').hidden=false; $('pickupSearchBox').hidden=true; }
+    else { $('pickupSelected').hidden=true; $('pickupSearchBox').hidden=false; $('pickupSearch').value=''; $('pickupResults').innerHTML=''; }
+    
+    if(draft.dropoff) { $('dropoffText').textContent = draft.dropoff.name; $('dropoffSelected').hidden=false; $('dropoffSearchBox').hidden=true; }
+    else { $('dropoffSelected').hidden=true; $('dropoffSearchBox').hidden=false; $('dropoffSearch').value=''; $('dropoffResults').innerHTML=''; }
+    
+    $('editor').hidden=false; checkDraft();
 }
-function renderDraft(){
-    $('pickupLabel').textContent=draft?.pickup?.name||'Lugar de recogida';
-    $('dropoffLabel').textContent=draft?.dropoff?.name||'Lugar de destino';
-    $('saveService').disabled=!draft?.pickup||!draft?.dropoff;
-}
-function closeEditor(){draft=null;$('editor').hidden=true;if(picking)cancelPick();}
 
-$('newService').onclick=()=>edit();$('cancelEditor').onclick=closeEditor;
-$('saveService').onclick=()=>{
-    draft.name=$('serviceName').value.trim()||'Servicio '+S.nextId;
-    if(draft.id) S.services[S.services.findIndex(s=>s.id===draft.id)]={...draft};
-    else {S.services.push({...draft,id:'s'+S.nextId++}); S.order.push(draft.id+':p',draft.id+':d');}
-    closeEditor();invalidate();render();
+$('newService').onclick = () => edit();
+$('cancelEditor').onclick = () => { draft=null; $('editor').hidden=true; cancelPick(); };
+
+$('saveService').onclick = () => {
+    draft.name = $('serviceName').value.trim() || 'Servicio '+S.nextId;
+    if(draft.id) S.services[S.services.findIndex(s=>s.id===draft.id)] = {...draft};
+    else { S.services.push({...draft, id:'s'+S.nextId++}); S.order.push(draft.id+':p', draft.id+':d'); }
+    $('editor').hidden=true; invalidate(); render();
 };
 
-function choose(target){
-    placeTarget=target;
-    $('placeResults').replaceChildren();$('searchStatus').textContent='Buscador OpenStreetMap libre.';
-    $('placeDialog').showModal();
-}
-
-function setPlace(target,p){
-    if(target==='origin'){stopGPS();S.origin={...p,type:'manual'};paintOrigin();invalidate();}
-    else if(target==='finish'){S.finish={...p};invalidate();}
-    else if(draft){draft[target]={...p};renderDraft();}
-    if($('placeDialog').open)$('placeDialog').close();
-    cancelPick();map.panTo([p.lat,p.lng]);render();
-}
-
-function cancelPick(){picking=null;$('mapHint').textContent='Selecciona en el mapa';$('cancelPick').hidden=true;$('map').style.cursor='';}
-
-$('chooseOrigin').onclick=()=>choose('origin');
-$('choosePickup').onclick=()=>choose('pickup');
-$('chooseDropoff').onclick=()=>choose('dropoff');
-$('chooseFinish').onclick=()=>choose('finish');
-$('clearFinish').onclick=()=>{S.finish=null;invalidate();render();};
-$('closePlace').onclick=()=>$('placeDialog').close();
+function startPick(target) { picking=target; $('mapHint').style.display='block'; $('map').style.cursor='crosshair'; }
+function cancelPick() { picking=null; $('mapHint').style.display='none'; $('map').style.cursor=''; }
+$('btnMapOrigin').onclick=()=> startPick('origin');
+$('btnMapPickup').onclick=()=> startPick('pickup');
+$('btnMapDropoff').onclick=()=> startPick('dropoff');
 $('cancelPick').onclick=cancelPick;
 
-$('placeMap').onclick=()=>{
-    picking=placeTarget;$('placeDialog').close();
-    $('mapHint').textContent='Toca el mapa';$('cancelPick').hidden=false;
-    $('map').style.cursor='crosshair';
-};
-
-map.on('click',e=>{
-    if(picking) setPlace(picking,{lat:e.latlng.lat,lng:e.latlng.lng,name:'Punto '+e.latlng.lat.toFixed(4)+', '+e.latlng.lng.toFixed(4)});
+map.on('click', e => {
+    if(picking) selectPoint(picking, {lat: e.latlng.lat, lng: e.latlng.lng, name: `Marcador en Mapa (${e.latlng.lat.toFixed(3)}, ${e.latlng.lng.toFixed(3)})`});
 });
 
-hospitals.forEach(([name,lat,lng])=>{
-    $('hospitals').append(button(name,null,()=>setPlace(placeTarget,{name,lat,lng})));
-});
+$('finishBase').onclick=()=>{ S.finish={name:'Base San Fernando', lat:40.4253, lng:-3.5350}; toast('Fin de ruta: Base S. Fernando'); invalidate(); render(); };
+$('finishLast').onclick=()=>{ S.finish=null; toast('Fin de ruta: Último destino'); invalidate(); render(); };
+$('capacity').onchange=()=> { S.capacity=Number($('capacity').value); invalidate(); render(); };
+$('clear').onclick=()=>{ if(confirm('¿Limpiar toda la ruta?')) {S.services=[]; S.order=[]; S.finish=null; invalidate(); render();} };
 
-// NUEVO BUSCADOR LIBRE (Nominatim - OpenStreetMap)
-$('searchForm').onsubmit=async e=>{
-    e.preventDefault();
-    const q=$('addressSearch').value.trim();
-    if(q.length<3) return toast('Introduce al menos 3 letras.');
-    $('searchStatus').textContent='Buscando...';
-    $('placeResults').replaceChildren();
-    try {
-        // Limita la búsqueda a Madrid aprox
-        const url=`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&viewbox=-4.65,41.2,-3.05,39.8&bounded=1&limit=5`;
-        const data=await requestJSON(url);
-        if(!data.length){$('searchStatus').textContent='No hay resultados.';return;}
-        $('searchStatus').textContent='Selecciona el correcto:';
-        data.forEach(r=>{
-            const name=r.display_name.split(',').slice(0,3).join(',');
-            $('placeResults').append(button(name,null,()=>setPlace(placeTarget,{name:name,lat:Number(r.lat),lng:Number(r.lon)})));
-        });
-    } catch(e) { $('searchStatus').textContent='Error: '+e.message; }
-};
-
-function paintOrigin(){
-    if(originMarker) map.removeLayer(originMarker);
-    if(accuracyCircle) map.removeLayer(accuracyCircle);
-    if(!S.origin) return;
-    const p=S.origin;
-    if(p.type==='gps'){
-        originMarker=L.marker([p.lat,p.lng],{zIndexOffset:2000,icon:L.divIcon({className:'ambulance',html:'🚑',iconSize:[40,40],iconAnchor:[20,20]})}).addTo(map);
-        accuracyCircle=L.circle([p.lat,p.lng],{radius:p.accuracy,color:'#63e3ba',fillOpacity:.08,weight:1}).addTo(map);
-    } else {
-        originMarker=L.circleMarker([p.lat,p.lng],{radius:10,color:'#fff',weight:3,fillColor:'#79c9ff',fillOpacity:1}).addTo(map);
-    }
-    $('originName').textContent=p.name;
-}
-
-function stopGPS(){
-    if(S.watch!==null) navigator.geolocation.clearWatch(S.watch);
-    S.watch=null; S.follow=false; S.lastFix=0;
-    $('gpsStatus').textContent='GPS desactivado';
-    $('gpsStatus').className='badge';
-}
+function stopGPS(){if(S.watch!==null) navigator.geolocation.clearWatch(S.watch); S.watch=null; $('gpsStatus').textContent='GPS inactivo'; $('gpsStatus').className='badge';}
 $('gps').onclick=()=>{
     if(S.watch!==null){stopGPS();return;}
     $('gpsStatus').textContent='Buscando...';
     S.watch=navigator.geolocation.watchPosition(p=>{
-        S.origin={lat:p.coords.latitude,lng:p.coords.longitude,accuracy:p.coords.accuracy,type:'gps',name:'Tu posición actual'};
-        paintOrigin();$('gpsStatus').textContent='GPS Activo';$('gpsStatus').className='badge ok';
-        sync();
-    }, e=>toast('Error GPS'), {enableHighAccuracy:true});
+        S.origin={lat:p.coords.latitude,lng:p.coords.longitude,accuracy:p.coords.accuracy,type:'gps',name:'Tu Posición Actual'};
+        paintOrigin(); $('gpsStatus').textContent='GPS Activo'; $('gpsStatus').className='badge ok';
+        if(routeNodes().length>0) $('organize').disabled=false;
+    }, e=>toast('Sin señal GPS'), {enableHighAccuracy:true});
 };
+
+function paintOrigin(){
+    if(originMarker) map.removeLayer(originMarker); if(accuracyCircle) map.removeLayer(accuracyCircle);
+    if(!S.origin) return;
+    if(S.origin.type==='gps'){
+        originMarker=L.marker([S.origin.lat,S.origin.lng],{icon:L.divIcon({className:'ambulance',html:'🚑',iconSize:[40,40]})}).addTo(map);
+    } else {
+        originMarker=L.circleMarker([S.origin.lat,S.origin.lng],{radius:10,color:'#fff',weight:3,fillColor:'#79c9ff',fillOpacity:1}).addTo(map);
+    }
+    $('originName').textContent = S.origin.name;
+}
+
+function pendingNodes(){return S.services.flatMap(s=>[...(s.status==='pending'?[{...s.pickup,id:s.id+':p',sid:s.id,type:'pickup',service:s.name}]:[]),{...s.dropoff,id:s.id+':d',sid:s.id,type:'dropoff',service:s.name}])}
+function routeNodes(){const ns=pendingNodes(); return [...S.order.map(id=>ns.find(n=>n.id===id)).filter(Boolean), ...(S.finish?[{...S.finish,id:'finish',type:'finish',service:'Fin'}] : [])];}
+function invalidate() { S.busy=false; if(routeLine){map.removeLayer(routeLine);routeLine=null;} $('distance').textContent='—'; $('duration').textContent='—'; $('arrival').textContent='—'; $('legs').innerHTML=''; }
+
+function render(){
+    markers.clearLayers(); $('services').replaceChildren();
+    S.services.forEach(s=>{
+        const box=element('div','service');
+        box.append(element('div','name',s.name), element('div','path','📍 '+s.pickup.name), element('div','path','🏁 '+s.dropoff.name));
+        const actions=element('div','actions');
+        actions.append(button('Editar','',()=>edit(s.id)), button('Borrar','',()=> {S.services=S.services.filter(x=>x.id!==s.id); S.order=S.order.filter(id=>!id.startsWith(s.id)); invalidate(); render();}));
+        box.append(actions); $('services').append(box);
+    });
+    
+    $('stops').replaceChildren(); const ns = routeNodes();
+    ns.forEach((p,i)=>{
+        const row=element('div','stop'), num=element('span','number '+p.type,i+1), info=element('div','grow');
+        info.append(element('span','type '+p.type,(p.type==='pickup'?'RECOGIDA':p.type==='dropoff'?'DESTINO':'FIN')+' · '+p.service), element('strong','',p.name));
+        row.append(num,info); $('stops').append(row);
+        L.marker([p.lat,p.lng],{icon:L.divIcon({className:'pin '+p.type,html:i+1,iconSize:[34,34]})}).addTo(markers);
+    });
+    
+    const ready = !!S.origin && ns.length>0;
+    $('organize').disabled = !ready || S.busy;
+    $('organize').textContent = S.busy ? 'Calculando...' : '✦ Optimizar Ruta';
+    $('navigate').disabled = !ready;
+    $('finishBase').style.borderColor = S.finish ? 'var(--accent)' : 'var(--line)';
+}
 
 $('center').onclick=()=>S.origin && map.setView([S.origin.lat,S.origin.lng],15);
 $('fit').onclick=()=>{
@@ -391,98 +373,65 @@ $('fit').onclick=()=>{
     else {const ps=[...(S.origin?[S.origin]:[]),...routeNodes()]; if(ps.length) map.fitBounds(ps.map(p=>[p.lat,p.lng]),{padding:[40,40]});}
 };
 
-$('capacity').onchange=()=>{S.capacity=Number($('capacity').value); invalidate();};
-$('clear').onclick=()=>{if(confirm('¿Limpiar todo?')){S.services=[];S.order=[];S.finish=null;invalidate();render();}};
-$('complete').onclick=()=>{
-    const p=routeNodes()[0]; if(!p) return;
-    if(p.type==='finish') S.finish=null;
-    else {
-        const s=S.services.find(s=>s.id===p.sid);
-        if(p.type==='pickup') s.status='onboard';
-        else S.services=S.services.filter(s=>s.id!==p.sid);
-        S.order.shift();
-    }
-    if(S.origin?.type==='manual'){S.origin={lat:p.lat,lng:p.lng,name:p.name,type:'manual'};paintOrigin();}
-    invalidate('Parada completada.');render();
-};
-
-async function calculate(optimize){
-    if(!S.origin||!routeNodes().length) return;
-    invalidate(optimize?'Maximizando eficiencia...':'Calculando recorrido...');
-    S.busy=true;sync();
+// Optimizador TSP de OSRM
+async function calculate() {
+    if(!S.origin || !routeNodes().length) return;
+    invalidate(); S.busy=true; render();
     try {
-        const origin={...S.origin};
-        const ns=pendingNodes(S.services);
-        
-        // 1. Optimizamos orden con OSRM (Matriz de tiempos)
-        if(optimize){
-            const points=[origin,...ns,...(S.finish?[S.finish]:[])];
-            const path=points.map(p=>p.lng+','+p.lat).join(';');
-            const data=await requestJSON('https://router.project-osrm.org/table/v1/driving/'+path+'?annotations=duration');
-            S.order=optimizeSequence(ns,S.services,S.capacity,data.durations,!!S.finish);
-            $('orderInfo').textContent='Orden optimizado automáticamente.';
-            render();
-        }
-        
-        // 2. Trazamos línea en mapa y tiempos básicos
-        const nodes=routeNodes();
-        const points=[origin,...nodes];
+        const ns=pendingNodes();
+        const points=[S.origin, ...ns, ...(S.finish?[S.finish]:[])];
         const path=points.map(p=>p.lng+','+p.lat).join(';');
-        const data=await requestJSON('https://router.project-osrm.org/route/v1/driving/'+path+'?overview=full&geometries=geojson');
-        const r=data.routes[0];
+        const mData=await fetch('https://router.project-osrm.org/table/v1/driving/'+path+'?annotations=duration').then(r=>r.json());
         
-        routeLine=L.geoJSON(r.geometry,{style:{color:'#63e3ba',weight:6,opacity:.9}}).addTo(map);
-        S.routeTime=Date.now();
+        const n=ns.length, total=1<<n;
+        const edge=(a,b)=>Number.isFinite(mData.durations[a]?.[b])?mData.durations[a][b]:Infinity;
+        const memo=new Map(), choice=new Map();
+        function solve(mask,last){
+            const key=mask*(n+1)+last; if(memo.has(key)) return memo.get(key);
+            if(mask===total-1) return S.finish?edge(last,n+1):0;
+            const aboard=new Set(); for(let i=0;i<n;i++){if(mask&(1<<i)){if(ns[i].type==='pickup')aboard.add(ns[i].sid); if(ns[i].type==='dropoff')aboard.delete(ns[i].sid);}}
+            let best=Infinity, next=-1;
+            for(let i=0;i<n;i++){
+                if(mask&(1<<i)) continue;
+                if(ns[i].type==='dropoff'&&!aboard.has(ns[i].sid) || ns[i].type==='pickup'&&aboard.size>=S.capacity) continue;
+                const cost=edge(last,i+1)+solve(mask|(1<<i),i+1);
+                if(cost<best){best=cost; next=i;}
+            }
+            memo.set(key,best); choice.set(key,next); return best;
+        }
+        solve(0,0);
+        const res=[]; let mask=0, last=0;
+        while(mask!==total-1){const i=choice.get(mask*(n+1)+last); res.push(ns[i].id); mask|=1<<i; last=i+1;}
+        S.order = res; render();
         
-        $('distance').textContent=km(r.distance);
-        $('duration').textContent=mins(r.duration);
-        $('arrival').textContent=clock(S.routeTime+r.duration*1000);
-        $('routeStatus').textContent='Ruta lista. Tiempos base sin tráfico.';
+        // Dibujar ruta
+        const ordNodes = routeNodes();
+        const rPath = [S.origin, ...ordNodes].map(p=>p.lng+','+p.lat).join(';');
+        const rData = await fetch('https://router.project-osrm.org/route/v1/driving/'+rPath+'?overview=full&geometries=geojson').then(r=>r.json());
+        routeLine = L.geoJSON(rData.routes[0].geometry,{style:{color:'#63e3ba',weight:6,opacity:.9}}).addTo(map);
         
-        $('legs').replaceChildren();
-        let el=0;
-        r.legs.forEach((leg,i)=>{
-            el+=leg.duration; const p=nodes[i];
-            const b=element('div','leg');
-            b.append(element('strong','',(i+1)+'. '+p.name),element('div','',km(leg.distance)+' · '+mins(leg.duration)));
-            $('legs').append(b);
-        });
+        $('distance').textContent = (rData.routes[0].distance/1000).toFixed(1)+' km';
+        $('duration').textContent = Math.round(rData.routes[0].duration/60)+' min';
+        $('arrival').textContent = new Date(Date.now()+rData.routes[0].duration*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
         $('fit').click();
-    } catch(e) {
-        $('routeStatus').textContent='Error: '+e.message;
-    } finally { S.busy=false;sync(); }
+    } catch(e){ toast('Error al calcular ruta.'); } finally { S.busy=false; render(); }
 }
+$('organize').onclick = calculate;
 
-$('organize').onclick=()=>calculate(true);
-$('calculate').onclick=()=>calculate(false);
-
-// EL GRAN TRUCO: Exportar toda la ruta directamente a la App de Google Maps
-$('navigate').onclick=()=>{
+// Exportar ruta a Google Maps App
+$('navigate').onclick = () => {
     if(!S.origin) return;
-    const nodes=routeNodes();
+    const nodes = routeNodes();
     if(!nodes.length) return;
-    
-    // Maps URL Scheme
     const originStr = `${S.origin.lat},${S.origin.lng}`;
-    const destNode = nodes[nodes.length - 1];
-    const destStr = `${destNode.lat},${destNode.lng}`;
-    
-    // Paradas intermedias separadas por pipe (|)
+    const destStr = `${nodes[nodes.length - 1].lat},${nodes[nodes.length - 1].lng}`;
     const waypoints = nodes.slice(0, -1).map(p => `${p.lat},${p.lng}`).join('|');
-    
     let url = `https://www.google.com/maps/dir/?api=1&origin=${originStr}&destination=${destStr}&travelmode=driving`;
     if(waypoints) url += `&waypoints=${waypoints}`;
-    
-    window.open(url, '_blank', 'noopener,noreferrer');
-    toast('¡Abriendo Google Maps con tráfico en tiempo real!');
+    window.open(url, '_blank');
+    toast('Abriendo Google Maps con tráfico...');
 };
 
-$('mobileToggle').onclick=()=>{
-    document.body.classList.toggle('mobile-map');
-    $('mobileToggle').textContent=document.body.classList.contains('mobile-map')?'Ver panel':'Solo mapa';
-    map.invalidateSize();
-};
-new ResizeObserver(()=>map.invalidateSize()).observe($('map'));
 render();
 </script>
 </body>
