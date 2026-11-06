@@ -1,0 +1,31 @@
+TECNI RUTA — INSTALACIÓN EN EL MÓVIL
+
+Descomprime este ZIP. Sube index.html, manifest.webmanifest, sw.js,
+icon-192.png e icon-512.png a la MISMA carpeta de tu web en GitHub.
+Sustituye el index anterior. No subas el ZIP sin descomprimir.
+No hace falta publicar en Play Store ni instalar un APK.
+
+Abre la dirección HTTPS de tu GitHub Pages en el móvil.
+Android (Chrome): pulsa Instalar Tecni Ruta; si el navegador aún no ofrece
+el diálogo, usa su menú ⋮ → Instalar aplicación / Añadir a pantalla de inicio.
+iPhone (Safari): Compartir → Añadir a pantalla de inicio → Añadir.
+El botón desaparece cuando abres la aplicación en su ventana instalada.
+
+La navegación, búsqueda, mapas y tráfico requieren internet y permisos GPS.
+Mantén la aplicación visible al navegar. La instalación no garantiza GPS
+en segundo plano. La interfaz puede abrirse sin conexión, pero sus recursos
+externos y los cálculos no están disponibles sin internet.
+
+MODO AHORRO PARA EQUIPOS
+Una petición TomTom al organizar la ruta completa. Navegar y pasar de parada
+reutilizan los tramos e indicaciones de esa respuesta, sin nuevas peticiones.
+No hay recálculos automáticos por tiempo, desvíos o recuperar conexión.
+Recalcular actualiza manualmente las paradas pendientes con una petición.
+La ETA se estima con el recorrido guardado: no refleja tráfico nuevo.
+El tráfico visual está apagado por defecto; Ver tráfico lo activa 30 segundos.
+Esa consulta opcional carga varias imágenes y consume peticiones adicionales.
+No existe un límite global para 100 usuarios en este HTML: consulta el consumo
+y las cuotas reales de tu cuenta TomTom. Una recarga pierde el recorrido.
+
+La instalación real y el GPS deben probarse desde el dominio autorizado.
+Se mantienen el catálogo de centros y el orden de servicios de la versión anterior.
